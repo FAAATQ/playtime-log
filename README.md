@@ -11,21 +11,37 @@ numbers under it.
 
 ## Where the numbers come from
 
-The record is my own, kept by hand in a Feishu sheet and exported to JSON by the
-sync script of my personal site. It is published at
-<https://fatq.top/?t=gaming>, and the copy this repository reads is
-`data/games.generated.json`, committed exactly as the export produced it.
+The record is my own playtime log. No single platform knows about all of it, so
+the hours are collected from three places and assembled by hand:
+
+- **Steam**, through the `IPlayerService/GetOwnedGames` endpoint of the Steam Web
+  API (<https://developer.valvesoftware.com/wiki/Steam_Web_API>), which returns
+  total minutes for every owned game. 65 of the timed records are tagged
+  `hoursSource: steam`, and 70 of them carry the `steamAppId` they were matched by.
+- **Nintendo Switch**, from the console's own playtime export. 74 records are
+  tagged `hoursSource: switch-export`.
+- **Everything else** — PlayStation, Xbox and mobile titles, where no usable API
+  exists — is typed in by hand and tagged `hoursSource: manual`. That covers 12
+  records, including the series cards that roll several titles into one row
+  (Call of Duty, Battlefield, Halo, Borderlands, BioShock) so their hours are not
+  counted twice.
+
+Genres for the Steam titles are filled in from the Store's own `appdetails`
+response rather than guessed, because `GetOwnedGames` does not report a genre.
+
+`data/games.generated.json` is that assembled export, committed here byte for
+byte, and it is the only thing the scripts read.
 
 The file holds 224 game records. A record is one game: an English and Chinese
 title, the platforms I played it on, its genres, and `hours` — the time played,
 **in hours**, as an integer. 208 records are marked visible and 151 of those
-carry a non-zero hour count; the rest are records I have kept but not shown,
-or entries still waiting for a time to be filled in.
+carry a non-zero hour count; the rest are records I have kept but not shown, or
+entries still waiting for a time to be filled in.
 
 Each record also carries a `hoursQualifier`, because not every number is equally
 exact. `exact` means the platform counted it. `approx` and `minimum` mean I
-estimated it, and the picture marks those bars with `~` and `≥` instead of
-pretending the precision is the same.
+estimated it by hand, and the picture marks those bars with `~` and `≥` instead
+of pretending the precision is the same.
 
 ## What the picture shows
 
