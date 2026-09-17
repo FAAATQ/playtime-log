@@ -1,45 +1,53 @@
 # /// script
 # requires-python = ">=3.10"
-# dependencies = ["requests"]
+# dependencies = []
 # ///
 
 """
-Fetch the numbers once, save the raw reply to data/, and never fetch again.
+Put the numbers in data/, once, and never touch them again.
 
     uv run fetch.py
 
-Change URL and FILE. The default is the Hong Kong Observatory's daily mean
-temperature for 2026, so the template runs before you have touched it and you
-can see what a file looks like when it arrives. It is an example, not your
-phenomenon: handing it in unchanged is handing in nothing.
+The numbers are my own game playtime records. They live in a Feishu sheet
+("游戏履历") that a sync script exports to JSON for my personal website. This
+file takes that exported JSON and copies it into data/ byte for byte, so the
+repository carries its own copy and every later script reads the local file.
+
+The raw file is committed, so on any other machine (or with the wifi off) this
+script finds data/games.generated.json already present, says so, and stops.
+SOURCE only matters on the machine that produced the export.
 """
 
+import shutil
 from pathlib import Path
 
-import requests
+# Where the export lands on my machine. Not needed once data/ is committed.
+SOURCE = Path.home() / "Documents/AICoworks/FatQPersonalWebsite/data/games.generated.json"
 
-URL = ("https://data.weather.gov.hk/weatherAPI/opendata/opendata.php"
-       "?dataType=CLMTEMP&rformat=csv&station=HKO&year=2026")      # CHANGE ME
-FILE = "hko-daily-mean-temperature-2026.csv"                          # CHANGE ME: say what it is,
-                                                                      # keep the publisher's extension
+FILE = "games.generated.json"
 HERE = Path(__file__).parent
 DATA = HERE / "data"
 
 
-def fetch(url, path):
-    """Ask for the file once. If it is already in data/, do nothing."""
+def fetch(source, path):
+    """Copy the export in once. If it is already in data/, do nothing."""
     if path.exists():
         print(f"data/{path.name} is already here ({path.stat().st_size // 1024} KB). "
-              "Delete it to fetch again.")
+              "Delete it to copy it in again.")
         return path
+
+    if not source.exists():
+        raise SystemExit(
+            f"data/{path.name} is missing and the export is not at {source}.\n"
+            "The committed copy is what the scripts read; restore it with:\n"
+            f"    git checkout data/{path.name}"
+        )
+
     DATA.mkdir(exist_ok=True)
-    print(f"asking {url}")
-    reply = requests.get(url, timeout=60, headers={"User-Agent": "SD5913 PolyU student"})
-    reply.raise_for_status()
-    path.write_bytes(reply.content)      # the raw reply, byte for byte: what arrived is what gets committed
-    print(f"saved data/{path.name} ({path.stat().st_size // 1024} KB). Now: git add data")
+    shutil.copyfile(source, path)
+    print(f"copied data/{path.name} ({path.stat().st_size // 1024} KB). Now: git add data")
     return path
 
 
 if __name__ == "__main__":
-    fetch(URL, DATA / FILE)
+    fetch(SOURCE, DATA / FILE)
