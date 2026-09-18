@@ -1,5 +1,9 @@
 # Twenty-two years of games, counted
 
+Using my own play records as the dataset for this assignment, rather than a
+published dataset of a natural phenomenon, was agreed with the course lecturer,
+Giovanni Lion, before I started.
+
 ![Twenty-five games as horizontal bars, longest first, coloured by platform](out/plot.png)
 
 ## What this is
@@ -23,10 +27,6 @@ is time played **in hours**, as an integer. 208 are visible, 151 of them with
 hours on them. `hoursQualifier` marks each number `exact`, `approx` or `minimum`,
 and the picture prints `~` and `≥` for the two estimates rather than pretending
 the precision is the same.
-
-Using my own play records as the dataset for this assignment, rather than a
-published dataset of a natural phenomenon, was agreed with the course lecturer,
-Giovanni Lion, before I started.
 
 ## What the picture shows
 
