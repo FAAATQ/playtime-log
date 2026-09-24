@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Playtime by genre</title>
+  <style>
+    :root { color: #1a1a1a; background: #faf8f4; font-family: ui-sans-serif, system-ui, sans-serif; }
+    body { max-width: 960px; margin: 3rem auto; padding: 0 1.5rem 4rem; }
+    h1 { margin-bottom: .25rem; line-height: 1.05; }
+    .promise, #caption { color: #6f6a64; }
+    .controls { margin: 2rem 0 1rem; }
+    label { font-weight: 700; }
+    select { margin-left: .5rem; padding: .45rem .6rem; font: inherit; }
+    #status { min-height: 1.6em; }
+    #chart { width: 100%; min-height: 440px; background: #fff; border: 1px solid #e8e4de; }
+    #chart[hidden] { display: none; }
+    .note { max-width: 75ch; }
+    a { color: #00544c; }
+  </style>
+</head>
+<body>
+  <p>SD5913 · Week 04 interaction</p>
+  <h1>Where my playtime goes, by genre</h1>
+  <p class="promise"><strong>Promise:</strong> When I choose a genre, the interface shows the games and recorded hours associated with that genre.</p>
+
+  <div class="controls">
+    <label for="genre">Genre</label>
+    <select id="genre" disabled aria-describedby="status"></select>
+  </div>
+  <p id="status" role="status" aria-live="polite">Loading game records…</p>
+
+  <svg id="chart" viewBox="0 0 900 560" role="img" aria-labelledby="chart-title" hidden>
+    <title id="chart-title">Games and hours for the selected genre</title>
+    <g id="drawing"></g>
+  </svg>
+  <p id="caption"></p>
+  <p class="note">A game can have more than one genre. Its hours appear under every matching genre, so genre totals are associated hours, not parts of one grand total.</p>
+  <p><a href="../README.md">Read the assignment</a> · <a href="../data/games.generated.json">Open the committed data</a></p>
+
+  <script src="app.js"></script>
+</body>
+</html>

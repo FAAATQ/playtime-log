@@ -1,5 +1,5 @@
-# Made from data/ on every run. Commit out/; never commit site/.
-site/
+# Made from data/ on every run. Commit out/. The handwritten Week 4 site is source,
+# not generated output, so it is committed too.
 data/cache/
 
 # Machinery, not work.

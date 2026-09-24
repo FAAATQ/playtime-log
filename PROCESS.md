@@ -38,6 +38,15 @@ wanted to make and there is no data in it, so the picture is a bar chart
 instead. Worth writing down: the shape of the data chose the chart, not the
 other way round.
 
+## Week 4 interaction
+
+I added one browser interaction: when I choose a genre, the page shows the games
+and recorded hours associated with it. The browser fetches the committed JSON
+once when the page loads, then keeps the eligible records in memory; changing
+the selector only filters and redraws them. A game can have more than one genre,
+so the page calls each total “associated hours” rather than suggesting genre
+totals add up to 9,114 hours.
+
 ## Corrected
 
 Smaller things a model got wrong and I kept or fixed on purpose:

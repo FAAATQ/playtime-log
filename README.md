@@ -44,6 +44,20 @@ one-character mark to warn you. And the axis stops at 2,000, so the four series
 cards at the top visually dominate a distribution that is mostly games under
 50 hours.
 
+## Week 4 interaction
+
+**When I choose a genre, the interface shows the games and recorded hours associated with that genre.** The page loads the committed JSON once; changing the selector redraws the chart from those records without another request. Genre hours overlap because one game can belong to more than one genre.
+
+Start the local interaction:
+
+```
+uv run start.py
+```
+
+It opens <http://127.0.0.1:8000/site/> automatically. Keep the terminal open while using it; press `Ctrl+C` to stop it. On macOS, double-click `site/Start Playtime Log.command` instead.
+
+This optional browser page extends the assignment; `out/plot.png` remains the required submitted picture.
+
 ## Run it
 
 ```
